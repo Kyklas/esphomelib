@@ -23,7 +23,7 @@ class ATXComponent : public Component {
    * @param enable_time The time in milliseconds the power supply requires for power up.
    * @param keep_on_time The time in milliseconds the power supply should be kept on after the last high-power request.
    */
-  explicit ATXComponent(uint8_t pin, uint32_t enable_time = 20, uint32_t keep_on_time = 10000);
+  explicit ATXComponent(uint8_t pin, uint32_t enable_time = 20, uint32_t keep_on_time = 10000,bool active_low = true);
 
   uint8_t get_pin() const;
   void set_pin(uint8_t pin);
@@ -31,6 +31,7 @@ class ATXComponent : public Component {
   void set_enable_time(uint32_t enable_time);
   uint32_t get_keep_on_time() const;
   void set_keep_on_time(uint32_t keep_on_time);
+  void set_active_low(bool);
 
   bool is_enabled() const;
 
@@ -41,10 +42,14 @@ class ATXComponent : public Component {
   float get_setup_priority() const override;
 
  private:
+
+  void set_value(bool active);
+
   uint8_t pin_;
   bool enabled_;
   uint32_t enable_time_;
   uint32_t keep_on_time_;
+  bool active_low_;
 };
 
 } // namespace esphomelib
