@@ -127,7 +127,11 @@ void SerialLightOutputComponent::loop() {
 	  g = gamma_correct(g, this->gamma_correct_);
 	  b = gamma_correct(b, this->gamma_correct_);
 
-	serial_->set_color(Rgb{r,g,b});
+	  uint8_t r8 = r*255;
+	  uint8_t g8 = g*255;
+	  uint8_t b8 = b*255;
+
+	serial_->set_color(Rgb{r8,g8,b8});
 	serial_->Update();
   }
 

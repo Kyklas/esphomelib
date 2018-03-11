@@ -75,8 +75,11 @@ void RMTOutputComponent::set_count(uint8_t count) {
 
 void RMTOutputComponent::set_color(Rgb color){
 	if(color.value != color_.value)
+	{
+		//ESP_LOGI(TAG, "Set_color %08X",color.value);
 		updated_ = false; // update is required
-	color_ = color;
+		color_ = color;
+	}
 }
 
 void RMTOutputComponent::Update()
