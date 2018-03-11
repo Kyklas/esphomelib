@@ -102,6 +102,40 @@ void LinearLightOutputComponent::setup_binary(output::BinaryOutput *binary) {
   this->traits_ = LightTraits(false, false, false);
 }
 
+
+SerialLightOutputComponent::SerialLightOutputComponent(output::RMTOutputComponent* serial)
+    : LightOutput(), gamma_correct_(2.8), serial_(serial), traits_(LightTraits(true, true, false)) {
+}
+
+void SerialLightOutputComponent::set_gamma_correct(float gamma_correct) {
+  this->gamma_correct_ = gamma_correct;
+}
+
+const LightTraits &SerialLightOutputComponent::get_traits() const {
+  return this->traits_;
+}
+
+void SerialLightOutputComponent::loop() {
+  LightColorValues values = this->get_current_values();
+
+  if (this->traits_.has_rgb()) {
+	  float r = values.get_state() * values.get_brightness() * values.get_red();
+	  float g = values.get_state() * values.get_brightness() * values.get_green();
+	  float b = values.get_state() * values.get_brightness() * values.get_blue();
+
+	  r = gamma_correct(r, this->gamma_correct_);
+	  g = gamma_correct(g, this->gamma_correct_);
+	  b = gamma_correct(b, this->gamma_correct_);
+
+	serial_->set_color(Rgb{r,g,b});
+	serial_->Update();
+  }
+
+}
+float SerialLightOutputComponent::get_gamma_correct() const {
+  return this->gamma_correct_;
+}
+
 } // namespace light
 
 } // namespace esphomelib

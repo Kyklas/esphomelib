@@ -34,12 +34,15 @@ class RMTOutputComponent : public HighPowerOutput, public Component {
   float get_setup_priority() const override;
 
   void set_color(Rgb color);
+  void Update();
 
  protected:
   uint8_t pin_;
   uint8_t channel_;
   uint8_t count_;
   LedType type_;
+  Rgb color_;
+  bool updated_;
 
   SmartLed* pLed_;
 };

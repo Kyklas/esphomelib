@@ -9,6 +9,7 @@
 #include <esphomelib/output/float_output.h>
 #include "light_state.h"
 #include "esphomelib/output/float_output.h"
+#include "esphomelib/output/rmt_output_component.h"
 
 namespace esphomelib {
 
@@ -67,6 +68,28 @@ class LinearLightOutputComponent : public LightOutput, public Component {
   output::FloatOutput *green_;
   output::FloatOutput *blue_;
   output::FloatOutput *white_;
+  LightTraits traits_;
+  float gamma_correct_;
+};
+
+/** SerialLightOutputComponent - Enables simple light output to RMT Output
+ *
+ * Supports several light types: RGB. Aditionally supports gamma correction.
+ */
+class SerialLightOutputComponent : public LightOutput, public Component {
+ public:
+  /// Construct a SerialLightOutputComponent with 2.8 as the gamma correction factor.
+	SerialLightOutputComponent(output::RMTOutputComponent* serial);
+
+  const LightTraits &get_traits() const override;
+
+  float get_gamma_correct() const;
+  void set_gamma_correct(float gamma_correct);
+
+  void loop() override;
+
+ protected:
+  output::RMTOutputComponent *serial_;
   LightTraits traits_;
   float gamma_correct_;
 };

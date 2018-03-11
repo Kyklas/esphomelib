@@ -17,9 +17,10 @@ namespace output {
 static const char *TAG = "output::rmt";
 
 RMTOutputComponent::RMTOutputComponent(uint8_t pin, const LedType& type, int count)
-    : Component(), HighPowerOutput(),pin_(pin),count_(count), pLed_(NULL), type_(type) {
+    : Component(), HighPowerOutput(),pin_(pin),count_(count), pLed_(NULL), type_(type),updated_(false) {
 	  this->set_channel(next_rmt_channel);
 	  next_rmt_channel = rmt_channel_t(int(next_rmt_channel) + 1); // NOLINT
+	  color_.value = 0;
 }
 
 
@@ -31,7 +32,16 @@ void RMTOutputComponent::setup() {
 
   if(pLed_ != NULL)
   {
+	  if(get_atx() == NULL)
+	  {
+		  set_color(Rgb{0,0,0});
+		  Update();
+	  }
 	  // disable ATX
+  }
+  else
+  {
+	  ESP_LOGE(TAG, "Setting up RMTComponent Failed");
   }
 }
 
@@ -63,18 +73,27 @@ void RMTOutputComponent::set_count(uint8_t count) {
   this->count_ = count;
 }
 
-void RMTOutputComponent::set_color(Rgb color)
+void RMTOutputComponent::set_color(Rgb color){
+	if(color.value != color_.value)
+		updated_ = false; // update is required
+	color_ = color;
+}
+
+void RMTOutputComponent::Update()
 {
-	  if(pLed_ != NULL)
+	  if(pLed_ != NULL && !updated_)
 	  {
+		  updated_=true;
 		  for(uint8_t idx = 0; idx < count_ ; idx++)
 		  {
-			  (*pLed_)[idx] = color;
+			  (*pLed_)[idx] = color_;
 		  }
-		  // this may need to be called every loop
-		  if ( color.value != 0)
-			  this->enable_atx();
+		  pLed_->show();
+		  // should there be a wait ?
 	  }
+	  // this may need to be called every loop
+	  if ( color_.value != 0)
+		  this->enable_atx();
 }
 
 
