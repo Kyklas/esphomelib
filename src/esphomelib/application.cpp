@@ -47,7 +47,7 @@ void Application::loop() {
 
 WiFiComponent *Application::init_wifi(const std::string &ssid, const std::string &password) {
   assert_nullptr(this->wifi_);
-  WiFiComponent *wifi = new WiFiComponent(ssid, password, generate_hostname(this->name_));
+  WiFiComponent *wifi = new WiFiComponent(ssid, password, this->name_);
   this->wifi_ = wifi;
   return this->register_component(wifi);
 }
@@ -66,7 +66,7 @@ MQTTClientComponent *Application::init_mqtt(const std::string &address, uint16_t
       .port = port,
       .username = username,
       .password = password,
-      .client_id = generate_hostname(this->name_)
+      .client_id = this->name_
   }, this->name_);
   component->set_discovery_info(discovery_prefix, true);
   this->mqtt_client_ = component;

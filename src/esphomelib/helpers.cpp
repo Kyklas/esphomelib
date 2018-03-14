@@ -16,7 +16,9 @@ std::string get_mac_address() {
   char tmp[20];
   uint8_t mac[6];
   esp_efuse_mac_get_default(mac);
-  sprintf(tmp, "%02x%02x%02x%02x%02x%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  //sprintf(tmp, "%02x%02x%02x%02x%02x%02x", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  // Use the last 3
+  sprintf(tmp, "%02x%02x%02x", mac[3], mac[4], mac[5]);
   return std::string(tmp);
 }
 
