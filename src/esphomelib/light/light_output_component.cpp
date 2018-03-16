@@ -123,9 +123,9 @@ void SerialLightOutputComponent::loop() {
 	  float g = values.get_state() * values.get_brightness() * values.get_green();
 	  float b = values.get_state() * values.get_brightness() * values.get_blue();
 
-	  r = gamma_correct(r, this->gamma_correct_);
-	  g = gamma_correct(g, this->gamma_correct_);
-	  b = gamma_correct(b, this->gamma_correct_);
+//	  r = gamma_correct(r, this->gamma_correct_);
+//	  g = gamma_correct(g, this->gamma_correct_);
+//	  b = gamma_correct(b, this->gamma_correct_);
 
 	  uint8_t r8 = r*255;
 	  uint8_t g8 = g*255;

@@ -76,7 +76,7 @@ void RMTOutputComponent::set_count(uint8_t count) {
 void RMTOutputComponent::set_color(Rgb color){
 	if(color.value != color_.value)
 	{
-		//ESP_LOGI(TAG, "Set_color %08X",color.value);
+//		ESP_LOGI(TAG, "Set_color %08X",color.value);
 		updated_ = false; // update is required
 		color_ = color;
 	}
@@ -93,6 +93,7 @@ void RMTOutputComponent::Update()
 		  }
 		  pLed_->show();
 		  // should there be a wait ?
+		  pLed_->wait();
 	  }
 	  // this may need to be called every loop
 	  if ( color_.value != 0)

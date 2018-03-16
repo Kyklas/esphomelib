@@ -97,8 +97,19 @@ bool MQTTClientComponent::is_connected() {
 }
 
 void MQTTClientComponent::reconnect() {
+  static uint32_t laststatus=millis();
+
   if (this->is_connected())
+  {
+    if(this->birth_message_ && millis()-laststatus > 10000)
+    {
+    	// Update status every 10 sec.
+    	laststatus=millis();
+		this->publish(this->birth_message_.value);
+    }
+
     return;
+  }
 
   ESP_LOGV(TAG, "Reconnecting to MQTT...");
   uint32_t start = millis();

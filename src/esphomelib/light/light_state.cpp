@@ -16,7 +16,7 @@ namespace light {
 static const char *TAG = "light::light_state";
 
 void LightState::start_transition(const LightColorValues &target, uint32_t length) {
-  if (this->traits_.supports_brightness()) {
+  if (this->traits_.supports_brightness() && length > 0) {
     this->transformer_ = make_unique<LightTransitionTransformer>(millis(), length,
                                                                  this->get_current_values_lazy(),
                                                                  target);
