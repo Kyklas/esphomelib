@@ -203,6 +203,7 @@ OTAComponent *Application::init_ota() {
 }
 void Application::connect_binary_sensor_pair(BinarySensor *binary_sensor, MQTTBinarySensorComponent *mqtt) {
   binary_sensor->set_on_new_state_callback(mqtt->create_on_new_state_callback());
+
 }
 Application::LightStruct Application::make_monochromatic_light(const std::string &friendly_name,
                                                                output::FloatOutput *mono) {

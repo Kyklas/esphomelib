@@ -22,8 +22,10 @@ class MQTTSensorComponent : public mqtt::MQTTComponent {
   void setup() override;
 
   sensor_callback_t create_new_data_callback();
+  sensor_str_callback_t create_new_data_str_callback();
 
   void push_out_value(float value, int8_t accuracy_decimals);
+  void push_out_value(const std::string &payload);
 
   const std::string &get_unit_of_measurement() const;
   void set_unit_of_measurement(const std::string &unit_of_measurement);

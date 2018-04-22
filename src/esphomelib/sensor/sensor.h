@@ -13,6 +13,7 @@ namespace esphomelib {
 namespace sensor {
 
 using sensor_callback_t = std::function<void(float, int8_t)>;
+using sensor_str_callback_t = std::function<void( const std::string &payload)>;
 
 /** Base-class for all sensors.
  *
@@ -23,11 +24,14 @@ class Sensor {
   virtual std::string unit_of_measurement() = 0;
 
   void set_new_value_callback(sensor_callback_t callback);
+  void set_new_value_str_callback(sensor_str_callback_t callback);
 
   void push_new_value(float value, int8_t accuracy_decimals);
+  void push_new_value( const std::string &payload);
 
  private:
   sensor_callback_t callback_;
+  sensor_str_callback_t str_callback_;
 };
 
 class TemperatureSensor : public Sensor {

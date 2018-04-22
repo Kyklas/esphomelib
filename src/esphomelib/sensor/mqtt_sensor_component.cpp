@@ -21,7 +21,8 @@ MQTTSensorComponent::MQTTSensorComponent(std::string friendly_name,
 
 void MQTTSensorComponent::setup() {
   this->send_discovery([&](JsonBuffer &buffer, JsonObject &root) {
-    root["unit_of_measurement"] = buffer.strdup(this->unit_of_measurement_.c_str());
+	if(!this->unit_of_measurement_.empty())
+		root["unit_of_measurement"] = buffer.strdup(this->unit_of_measurement_.c_str());
     if (this->expire_after_)
       root["expire_after"] = this->expire_after_.value;
   }, true, false);
@@ -35,6 +36,12 @@ sensor_callback_t MQTTSensorComponent::create_new_data_callback() {
     } else {
       this->push_out_value(value, accuracy_decimals);
     }
+  };
+}
+
+sensor_str_callback_t MQTTSensorComponent::create_new_data_str_callback() {
+  return [this]( const std::string &payload) {
+      this->push_out_value(payload);
   };
 }
 
@@ -64,6 +71,12 @@ void MQTTSensorComponent::push_out_value(float value, int8_t accuracy_decimals) 
   dtostrf(value_rounded, 0, uint8_t(std::max(0, int(accuracy_decimals))), tmp);
   this->send_message(this->get_state_topic(), tmp);
 }
+
+void MQTTSensorComponent::push_out_value( const std::string &payload) {
+  this->send_message(this->get_state_topic(), payload);
+}
+
+
 float MQTTSensorComponent::get_offset() const {
   return this->offset_;
 }
