@@ -84,20 +84,31 @@ void RMTOutputComponent::set_color(Rgb color){
 
 void RMTOutputComponent::Update()
 {
+	static uint32_t time = millis();
+
+  // this may need to be called every loop
+  if ( color_.value != 0)
+	  this->enable_atx();
+
+//	// Update greater than 10ms apart
+//	if(millis() - time < 10)
+//		return;
+
 	  if(pLed_ != NULL && !updated_)
 	  {
+		  time = millis();
 		  updated_=true;
 		  for(uint8_t idx = 0; idx < count_ ; idx++)
 		  {
 			  (*pLed_)[idx] = color_;
 		  }
 		  pLed_->show();
-		  // should there be a wait ?
-		  pLed_->wait();
+//			ESP_LOGI(TAG, "Show RGB %08X",color_.value);
+//		   should there be a wait ?
+			  pLed_->wait();
+			  usleep(5000);
 	  }
-	  // this may need to be called every loop
-	  if ( color_.value != 0)
-		  this->enable_atx();
+
 }
 
 

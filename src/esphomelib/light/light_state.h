@@ -46,6 +46,8 @@ class LightState {
    */
   void start_transition(const LightColorValues &target, uint32_t length);
 
+  bool transition_finished();
+
   /** Start a flash for the specified amount of time.
    *
    * Resets to the values that were active when the flash was started after length ms.

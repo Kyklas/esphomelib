@@ -2,7 +2,6 @@
 // Created by Otto Winter on 26.11.17.
 //
 
-#include <esp32-hal-gpio.h>
 #include "gpio_button_sensor_component.h"
 
 namespace esphomelib {

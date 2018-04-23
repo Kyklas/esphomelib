@@ -48,13 +48,14 @@ class ButtonSensor : public sensor::Sensor {
 
   BUTTON_STATE Get_State();
 
+  static const std::string GetStateName(BUTTON_STATE state);
+
  protected:
   button_callback_t new_state_callback_;
   sensor::sensor_str_callback_t new_state_str_callback_;
 
   BUTTON_STATE state_;
 
-  static const std::string GetStateName(BUTTON_STATE state);
 
 };
 

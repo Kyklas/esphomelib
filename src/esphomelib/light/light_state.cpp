@@ -26,6 +26,13 @@ void LightState::start_transition(const LightColorValues &target, uint32_t lengt
   this->send_values();
 }
 
+bool LightState::transition_finished()
+{
+	if(this->transformer_ != nullptr)
+		return this->transformer_->is_finished();
+	return true;
+}
+
 void LightState::set_send_callback(light_send_callback_t send_callback) {
   this->send_callback_ = std::move(send_callback);
 }
@@ -56,12 +63,14 @@ LightColorValues LightState::get_current_values() {
   this->effect_->apply_effect(this);
 
   if (this->transformer_ != nullptr) {
-    if (this->transformer_->is_finished()) {
+    if (this->transformer_->is_finished())
+    {
       ESP_LOGD(TAG, "Finished transformer.");
       this->values_ = this->transformer_->get_end_values();
       this->transformer_ = nullptr;
       this->send_values();
-    } else {
+    } else
+    {
       this->values_ = this->transformer_->get_values();
     }
   }

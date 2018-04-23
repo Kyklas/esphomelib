@@ -5,6 +5,7 @@
 #ifndef ESPHOMELIB_INPUT_GPIO_BUTTON_SENSOR_COMPONENT_H
 #define ESPHOMELIB_INPUT_GPIO_BUTTON_SENSOR_COMPONENT_H
 
+#include <esp32-hal-gpio.h>
 #include "esphomelib/sensor/button_sensor.h"
 #include <cstdint>
 
