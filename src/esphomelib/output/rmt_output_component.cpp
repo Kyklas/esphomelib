@@ -19,7 +19,7 @@ static const char *TAG = "output::rmt";
 RMTOutputComponent::RMTOutputComponent(uint8_t pin, const LedType& type, int count)
     : Component(), HighPowerOutput(),pin_(pin),count_(count), pLed_(NULL), type_(type),updated_(false) {
 	  this->set_channel(next_rmt_channel);
-	  next_rmt_channel = rmt_channel_t(int(next_rmt_channel) + 1); // NOLINT
+	  next_rmt_channel = rmt_channel_t(int(next_rmt_channel) + 2); // NOLINT
 	  color_.value = 0;
 }
 
