@@ -88,14 +88,11 @@ void RMTOutputComponent::Update()
 
   // this may need to be called every loop
   if ( color_.value != 0)
-  {
 	  this->enable_atx();
 
-  }
-
-	// Update greater than 10ms apart
-	if(millis() - time < 10)
-		return;
+//	// Update greater than 10ms apart
+//	if(millis() - time < 10)
+//		return;
 
 	  if(pLed_ != NULL && !updated_)
 	  {
@@ -105,13 +102,11 @@ void RMTOutputComponent::Update()
 		  {
 			  (*pLed_)[idx] = color_;
 		  }
-//		  pLed_->wait();
-
 		  pLed_->show();
 //			ESP_LOGI(TAG, "Show RGB %08X",color_.value);
 //		   should there be a wait ?
-			//  pLed_->wait();
-			  //usleep(5000);
+			  pLed_->wait();
+			  usleep(5000);
 	  }
 
 }
