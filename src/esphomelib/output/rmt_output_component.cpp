@@ -28,10 +28,19 @@ void RMTOutputComponent::setup() {
   ESP_LOGD(TAG, "Setting up RMTComponent with pin=%u, channel=%u, count=%u",
            this->pin_, this->channel_,this->count_ );
 
+
+#if USE_RMT_DEV
   pLed_ = new SmartLed(type_,count_,pin_,channel_, DoubleBuffer );
+#elif USE_SPI_DEV
+  pLed_ = new WS2812B(count_,pin_);
+#endif
 
   if(pLed_ != NULL)
   {
+		#if USE_SPI_DEV
+		  pLed_->initSPI();
+		#endif
+
 	  if(get_atx() == NULL)
 	  {
 		  set_color(Rgb{0,0,0});

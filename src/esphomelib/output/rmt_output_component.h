@@ -9,6 +9,7 @@
 #ifndef ESPHOMELIB_OUTPUT_RMT_OUTPUT_COMPONENT_H
 #define ESPHOMELIB_OUTPUT_RMT_OUTPUT_COMPONENT_H
 
+#define USE_SPI_DEV 1
 
 #include <SmartLeds.h>
 #include "high_power_output.h"
@@ -44,7 +45,11 @@ class RMTOutputComponent : public HighPowerOutput, public Component {
   Rgb color_;
   bool updated_;
 
+#if USE_RMT_DEV
   SmartLed* pLed_;
+#elif USE_SPI_DEV
+  WS2812B * pLed_;
+#endif
 };
 
 
