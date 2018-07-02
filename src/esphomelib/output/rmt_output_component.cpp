@@ -105,8 +105,8 @@ void RMTOutputComponent::Update()
 		  pLed_->show();
 //			ESP_LOGI(TAG, "Show RGB %08X",color_.value);
 //		   should there be a wait ?
-			  pLed_->wait();
-			  usleep(5000);
+		  pLed_->wait();
+		  usleep(5000);
 	  }
 
 }

@@ -42,10 +42,10 @@
   ],
   "build": {
     "flags": [
-      "-DLOG_LOCAL_LEVEL=ESP_LOG_VERBOSE",
+      "-DLOG_LOCAL_LEVEL=ESP_LOG_INFO",
       "-DMQTT_MAX_PACKET_SIZE=512",
       "-DCONFIG_ARDUHAL_LOG_COLORS=1",
-      "-DCORE_DEBUG_LEVEL=5"
+      "-DCORE_DEBUG_LEVEL=3"
     ]
   },
   "license": "GPL-3.0",

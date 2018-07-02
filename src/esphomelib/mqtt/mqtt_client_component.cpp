@@ -152,6 +152,15 @@ void MQTTClientComponent::reconnect() {
     this->mqtt_client_.subscribe(subscription.topic.c_str(), subscription.qos);
 }
 
+#if LOG_LOCAL_LEVEL > 3
+#error "Check log level LOG_LOCAL_LEVEL"
+#endif
+
+#if ARDUHAL_LOG_LEVEL > 3
+#error "check log level ARDUHAL_LOG_LEVEL"
+#endif
+
+
 void MQTTClientComponent::publish(const std::string &topic, const std::string &payload, bool retain) {
   if (topic != global_log_component->get_logging_topic()) {
     ESP_LOGV(TAG, "Publish(topic='%s' payload='%s' retain=%d)", topic.c_str(), payload.c_str(), retain);
