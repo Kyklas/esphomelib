@@ -23,7 +23,6 @@ void LightState::start_transition(const LightColorValues &target, uint32_t lengt
   } else {
     this->set_immediately(target);
   }
-  this->send_values();
 }
 
 bool LightState::transition_finished()
