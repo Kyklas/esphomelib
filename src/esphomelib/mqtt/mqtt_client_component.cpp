@@ -152,13 +152,15 @@ void MQTTClientComponent::reconnect() {
     this->mqtt_client_.subscribe(subscription.topic.c_str(), subscription.qos);
 }
 
-#if LOG_LOCAL_LEVEL > 3
-#error "Check log level LOG_LOCAL_LEVEL"
-#endif
+// SB : this was added
 
-#if ARDUHAL_LOG_LEVEL > 3
-#error "check log level ARDUHAL_LOG_LEVEL"
-#endif
+//#if LOG_LOCAL_LEVEL > 3
+//#error "Check log level LOG_LOCAL_LEVEL"
+//#endif
+//
+//#if ARDUHAL_LOG_LEVEL > 3
+//#error "check log level ARDUHAL_LOG_LEVEL"
+//#endif
 
 
 void MQTTClientComponent::publish(const std::string &topic, const std::string &payload, bool retain) {
